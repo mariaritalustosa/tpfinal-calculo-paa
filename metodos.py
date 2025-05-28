@@ -63,7 +63,7 @@ def secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
 
     tempo = time.time() - inicio
     erro = abs(f(x1))
-    return x1, iteracoes, tempo, erro         
+    return x1, iteracoes, tempo, erro     
     
 
 # a fazer: adicionar essa parte na interface principal
