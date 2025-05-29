@@ -37,17 +37,17 @@ def main():
     print("fazer")
 
     # metodo da bisessao puro
-    #raiz_b, iteracoes_b, tempo_b, erro_b = metodos.metodo_bissecao(f, a, b)
-    print("fazer")
+    raiz_b, iteracoes_b, tempo_b, erro_b = metodos.metodo_bissecao(f, a, b)
 
     # tabela comparativa:
     print("+-----------------------------------------------------------------------------------------+")
     print("|                              TABELA COMPARATIVA DE MÉTODOS                              |")
     print("+-----------------------------------------------------------------------------------------+")
     print(f"| Secante          Raiz: {raiz_s:.6f} | Iterações: {iteracoes_s} | Tempo: {tempo_s:.6f}s | Precisão: {erro_s:.2e} |")
-    print(f"| Misto           Raiz: {raiz_m:.6f} | Iterações: {iteracoes_m} | Tempo: {tempo_m:.6f}s | Precisão: {erro_m:.2e} |")
+    print(f"| Misto            Raiz: {raiz_m:.6f} | Iterações: {iteracoes_m} | Tempo: {tempo_m:.6f}s | Precisão: {erro_m:.2e} |")
     # print(f"| Newton-Raphson  Raiz: {raiz_nr:.6f} | Iterações: {iteracoes_nr} | Tempo: {tempo_nr:.6f}s | Precisão: {erro_nr:.2e} |")
-    # print(f"| Bisessao        Raiz: {raiz_b:.6f} | Iterações: {iteracoes_b} | Tempo: {tempo_b:.6f}s | Precisão: {erro_b:.2e}" |)
+    print(f"| Bisessao         Raiz: {raiz_b:.6f} | Iterações: {iteracoes_b} | Tempo: {tempo_b:.6f}s | Precisão: {erro_b:.2e} |")
+    print("+-----------------------------------------------------------------------------------------+")
 
 
 if __name__ == "__main__":

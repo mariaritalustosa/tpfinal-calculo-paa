@@ -71,7 +71,6 @@ def metodo_misto(f, df, a, b, x0, tol=1e-4, max_iter=100):
 
     # Não convergiu após o número máximo de iterações
     tempo = time.time() - inicio
-    erro = abs 
     return x0, 100, tempo, erro
 
 
@@ -86,26 +85,26 @@ def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
     iteracoes = 0
 
     if f(a) * f(b) >= 0:
-        print("O método da bisseção requer que a e b tenham sinais opostos")
-        return None, 0, 0, None
+        print("Erro no método da bisseção: requer que a e b tenham sinais opostos")
+        return 0, 0, 0, 0
     
     while iteracoes < max_iteracoes:
         c = (a + b) / 2.0
         fc = f(c)
+        erro = abs(b - a) / 2.0
 
-        if abs(fc) < tolerancia or (b - a) / 2 < tolerancia:
+        if abs(fc) < tolerancia or erro < tolerancia:
             tempo = time.time() - inicio
-            erro = abs(fc)
             return c, iteracoes + 1, tempo, erro
         
         if f(a) * fc < 0:
             b = c
         else:
-            a = c    
+            a = c
 
         iteracoes += 1
 
     tempo = time.time() - inicio
     c = (a + b) / 2.0
-    erro = abs(f(c))
-    return c, iteracoes, tempo, erro        
+    erro = abs(b - a) / 2.0
+    return c, iteracoes, tempo, erro
