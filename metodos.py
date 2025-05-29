@@ -26,8 +26,53 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
     return x1, iteracoes, tempo, erro
 
 
-def metodo_misto(a, b, tolerancia= 1e-4, max_iteracoes=100):
-    print("a fazer")
+def metodo_misto(f, df, a, b, x0, tol=1e-4, max_iter=100):
+    inicio = time.time()
+
+    if f(a) * f(b) >= 0:
+        print("Erro no metodo misto: f(a) e f(b) devem ter sinais opostos.")
+        return 0, 0, 0, 0
+
+    erro = None
+
+    for i in range(max_iter):
+        
+        fx = f(x0)
+        dfx = df(x0)
+        # Tenta Newton-Raphson
+        if dfx != 0:
+            x_new = x0 - fx / dfx
+        else:
+            # Se a derivada for 0, força bisseção
+            x_new = (a + b) / 2
+
+        # Se Newton-Raphson sair do intervalo, força bisseção
+        if not (a < x_new < b):
+            x_new = (a + b) / 2
+
+        f_new = f(x_new)
+        erro = abs(x_new - x0)
+        
+        # descomente para seguir o método passo a passo:
+        # print(f"Iteração {i+1}: x = {x_new:.6f}, f(x) = {f_new:.6e}, erro = {erro:.2e}")
+
+        # caso chegue em uma tolerância aceitável
+        if erro < tol:
+            tempo = time.time() - inicio
+            return x_new, i, tempo, erro
+
+        # Atualiza intervalo
+        if f(a) * f_new < 0:
+            b = x_new
+        else:
+            a = x_new
+
+        x0 = x_new
+
+    # Não convergiu após o número máximo de iterações
+    tempo = time.time() - inicio
+    erro = abs 
+    return x0, 100, tempo, erro
 
 
 def metodo_newton_raphson(x0, tolerancia=1e-4, max_iteracoes=100):
