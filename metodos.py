@@ -74,10 +74,33 @@ def metodo_misto(f, df, a, b, x0, tol=1e-4, max_iter=100):
     return x0, 100, tempo, erro
 
 
-def metodo_newton_raphson(x0, tolerancia=1e-4, max_iteracoes=100):
-    print("a fazer")
+def metodo_newton_raphson(f, df, x0, tol=1e-4, max_iter=100):
     inicio = time.time()
-    iteracoes = 0
+
+    for i in range(max_iter):
+        fx = f(x0)
+        dfx = df(x0)
+
+        if dfx == 0:
+            print("Erro no metodo de newton-raphson: Derivada igual a zero. Método falhou.")
+            return 0, 0, 0, 0
+
+        # Fórmula do método de Newton-Raphson
+        x1 = x0 - fx / dfx
+        erro = abs(x1 - x0)
+
+        # descomente para seguir o método passo a passo:
+        # print(f"Iteração {i+1}: x = {x1:.6f}, f(x) = {fx:.6f}, erro = {erro:.6e}")
+
+        if erro < tol:
+            tempo = time.time() - inicio
+            return x1, i + 1, tempo, erro
+
+        x0 = x1
+
+    # Número máximo de iterações atingido sem convergência
+    tempo = time.time() - inicio
+    return x1, i + 1, tempo, erro
 
 
 def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
