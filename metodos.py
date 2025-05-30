@@ -8,19 +8,22 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
     for i in range(max_iteracoes):
         f_x0 = f(x0)
         f_x1 = f(x1)
-        if f_x1 - f_x0 == 0:
+
+        if abs(f_x1 - f_x0) < 1e-4:
             print("Divisão por zero evitada")
             break
-        
+         #calcula o próximo ponto da iteração pelo método da secante
         x2 = x1 - f_x1 * (x1 - x0) / (f_x1 - f_x0)
         iteracoes += 1
 
-        if abs(x2 - x1) < tolerancia:
+         #critério de parada: se o valor absoluto da função em x2 é menor que a tolerância desejada
+        if abs(f(x2)) < tolerancia:
             tempo = time.time() - inicio
             erro = abs(f(x2))
             return x2, iteracoes, tempo, erro     
         x0, x1 = x1, x2
 
+    #caso não tenha convergido, retorna a última aproximação, e o tempo, número de iterações e erro
     tempo = time.time() - inicio
     erro = abs(f(x1))
     return x1, iteracoes, tempo, erro
@@ -104,22 +107,28 @@ def metodo_newton_raphson(f, df, x0, tol=1e-4, max_iter=100):
 
 
 def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
+    #inicia a contagem de tempo para medir a duração do método
     inicio = time.time()
     iteracoes = 0
 
+    #verifica se f(a) e f(b) tem sinais opostos
     if f(a) * f(b) >= 0:
         print("Erro no método da bisseção: requer que a e b tenham sinais opostos")
         return 0, 0, 0, 0
     
     while iteracoes < max_iteracoes:
         c = (a + b) / 2.0
+        #avalia a função do ponto médio
         fc = f(c)
+        #calcula o erro aproximado como metade do tamanho do intervalo
         erro = abs(b - a) / 2.0
 
         if abs(fc) < tolerancia or erro < tolerancia:
             tempo = time.time() - inicio
+            #retorna a raiz aproximada, número de iterações, tempo gasto e erro
             return c, iteracoes + 1, tempo, erro
-        
+          
+        #atualiza o intervalo [a, b] dependendo do sinal do produto f(a)*f(c)
         if f(a) * fc < 0:
             b = c
         else:
