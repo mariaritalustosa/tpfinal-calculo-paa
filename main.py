@@ -49,6 +49,5 @@ def main():
     print(f"| Bisseção     Raiz: {formatar_raiz(raiz_b)} | Iterações: {formatar_iteracoes(iteracoes_b)} | Tempo: {tempo_b:.6f}s | Precisão: {erro_b:.2e} |")
     print("+-----------------------------------------------------------------------------------------+")
 
-
 if __name__ == "__main__":
     main()

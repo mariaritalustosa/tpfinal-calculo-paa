@@ -1,7 +1,8 @@
 import time
-import sympy as sp
+
 
 def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
+    # [ALGUNS CODIGOS FORAM MOVIDOS, AI PRECISA ARRUMAR OS COMENTÁRIOS PARA O LUGAR CORRETO]
     inicio = time.time()
     iteracoes = 0
 
@@ -9,23 +10,35 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
         f_x0 = f(x0)
         f_x1 = f(x1)
 
-        if abs(f_x1 - f_x0) < 1e-4:
+        # [ADICIONAR] Adicionar retorno dos valores atuais caso nao dê para calcular mais
+        if abs(f_x1 - f_x0) == 0:
             print("Divisão por zero evitada")
             break
          #calcula o próximo ponto da iteração pelo método da secante
-        x2 = x1 - f_x1 * (x1 - x0) / (f_x1 - f_x0)
+        # x2 = x1 - f_x1 * (x1 - x0) / (f_x1 - f_x0)
+        x2  = (x0 * f_x1  - x1 * f_x0) / (f_x1 - f_x0)
         iteracoes += 1
 
          #critério de parada: se o valor absoluto da função em x2 é menor que a tolerância desejada
-        if abs(f(x2)) < tolerancia:
+        
+        errox = abs(x2 - x1)
+        # erroy = abs(f(x2)) VERIFICAR COM O PROFESSOR
+
+        erro = None
+
+        if(errox < tolerancia):
+            erro = errox
+        # elif (erroy < tolerancia):  VERIFICAR COM O PROFESSOR
+        #     erro = erroy  VERIFICAR COM O PROFESSOR
+
+        if erro:
             tempo = time.time() - inicio
-            erro = abs(f(x2))
             return x2, iteracoes, tempo, erro     
         x0, x1 = x1, x2
 
     #caso não tenha convergido, retorna a última aproximação, e o tempo, número de iterações e erro
     tempo = time.time() - inicio
-    erro = abs(f(x1))
+    erro = abs(x2 - x1)
     return x1, iteracoes, tempo, erro
 
 
@@ -62,7 +75,7 @@ def metodo_misto(f, df, a, b, x0, tol=1e-4, max_iter=100):
         # caso chegue em uma tolerância aceitável
         if erro < tol:
             tempo = time.time() - inicio
-            return x_new, i, tempo, erro
+            return x_new, i + 1, tempo, erro
 
         # Atualiza intervalo
         if f(a) * f_new < 0:
@@ -106,7 +119,10 @@ def metodo_newton_raphson(f, df, x0, tol=1e-4, max_iter=100):
     return x1, i + 1, tempo, erro
 
 
+
 def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
+    # [ALGUNS CODIGOS FORAM MOVIDOS, AI PRECISA ARRUMAR OS COMENTÁRIOS PARA O LUGAR CORRETO]
+    
     #inicia a contagem de tempo para medir a duração do método
     inicio = time.time()
     iteracoes = 0
@@ -121,18 +137,21 @@ def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
         #avalia a função do ponto médio
         fc = f(c)
         #calcula o erro aproximado como metade do tamanho do intervalo
-        erro = abs(b - a) / 2.0
+        #erro = abs(b - a) / 2.0
 
-        if abs(fc) < tolerancia or erro < tolerancia:
+        if f(a) * fc <= 0:
+            b = c
+        else:
+            a = c
+
+        erro = abs(b - a)
+
+        if erro <= tolerancia:
             tempo = time.time() - inicio
             #retorna a raiz aproximada, número de iterações, tempo gasto e erro
             return c, iteracoes + 1, tempo, erro
           
         #atualiza o intervalo [a, b] dependendo do sinal do produto f(a)*f(c)
-        if f(a) * fc < 0:
-            b = c
-        else:
-            a = c
 
         iteracoes += 1
 
