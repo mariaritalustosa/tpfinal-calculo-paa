@@ -46,7 +46,7 @@ def main():
     print(f"| Secante        Raiz: {formatar_raiz(raiz_s)} | Iterações: {formatar_iteracoes(iteracoes_s)} | Tempo: {tempo_s:.6f}s | Precisão: {erro_s:.2e} |")
     print(f"| Misto          Raiz: {formatar_raiz(raiz_m)} | Iterações: {formatar_iteracoes(iteracoes_m)} | Tempo: {tempo_m:.6f}s | Precisão: {erro_m:.2e} |")
     print(f"| Newton-Raphson Raiz: {formatar_raiz(raiz_nr)} | Iterações: {formatar_iteracoes(iteracoes_nr)} | Tempo: {tempo_nr:.6f}s | Precisão: {erro_nr:.2e} |")
-    print(f"| Bisessao       Raiz: {formatar_raiz(raiz_b)} | Iterações: {formatar_iteracoes(iteracoes_b)} | Tempo: {tempo_b:.6f}s | Precisão: {erro_b:.2e} |")
+    print(f"| Bisseção     Raiz: {formatar_raiz(raiz_b)} | Iterações: {formatar_iteracoes(iteracoes_b)} | Tempo: {tempo_b:.6f}s | Precisão: {erro_b:.2e} |")
     print("+-----------------------------------------------------------------------------------------+")
 
 
