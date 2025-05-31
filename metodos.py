@@ -1,6 +1,5 @@
 import time
 
-
 def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
     # [ALGUNS CODIGOS FORAM MOVIDOS, AI PRECISA ARRUMAR OS COMENTÁRIOS PARA O LUGAR CORRETO]
     inicio = time.time()
@@ -10,18 +9,16 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
         f_x0 = f(x0)
         f_x1 = f(x1)
 
-        # [ADICIONAR] Adicionar retorno dos valores atuais caso nao dê para calcular mais
         if abs(f_x1 - f_x0) == 0:
-            print("Divisão por zero evitada")
-            break
-         #calcula o próximo ponto da iteração pelo método da secante
-        # x2 = x1 - f_x1 * (x1 - x0) / (f_x1 - f_x0)
+            print("Erro no metodo da secante: divisão por zero evitada")
+            return 0, 0, 0, 0
+        
+        #calcula o próximo ponto da iteração pelo método da secante
         x2  = (x0 * f_x1  - x1 * f_x0) / (f_x1 - f_x0)
         iteracoes += 1
 
-         #critério de parada: se o valor absoluto da função em x2 é menor que a tolerância desejada
-        
         errox = abs(x2 - x1)
+        # critério de parada: se o valor absoluto da função em x2 é menor que a tolerância desejada
         # erroy = abs(f(x2)) VERIFICAR COM O PROFESSOR
 
         erro = None
@@ -36,7 +33,7 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
             return x2, iteracoes, tempo, erro     
         x0, x1 = x1, x2
 
-    #caso não tenha convergido, retorna a última aproximação, e o tempo, número de iterações e erro
+    #caso não tenha convergido, retorna a última aproximação, tempo, número de iterações e o erro
     tempo = time.time() - inicio
     erro = abs(x2 - x1)
     return x1, iteracoes, tempo, erro
@@ -134,24 +131,22 @@ def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
     
     while iteracoes < max_iteracoes:
         c = (a + b) / 2.0
-        #avalia a função do ponto médio
+        #avalia a função no ponto médio
         fc = f(c)
-        #calcula o erro aproximado como metade do tamanho do intervalo
-        #erro = abs(b - a) / 2.0
 
+        #atualiza o intervalo [a, b] dependendo do sinal do produto f(a)*f(c)
         if f(a) * fc <= 0:
             b = c
         else:
             a = c
 
+        #calcula o erro
         erro = abs(b - a)
 
         if erro <= tolerancia:
             tempo = time.time() - inicio
             #retorna a raiz aproximada, número de iterações, tempo gasto e erro
             return c, iteracoes + 1, tempo, erro
-          
-        #atualiza o intervalo [a, b] dependendo do sinal do produto f(a)*f(c)
 
         iteracoes += 1
 
