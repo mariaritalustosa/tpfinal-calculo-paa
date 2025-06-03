@@ -1,7 +1,6 @@
 import time
 
 def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
-    # [ALGUNS CODIGOS FORAM MOVIDOS, AI PRECISA ARRUMAR OS COMENTÁRIOS PARA O LUGAR CORRETO]
     inicio = time.time()
     iteracoes = 0
 
@@ -18,15 +17,11 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
         iteracoes += 1
 
         errox = abs(x2 - x1)
-        # critério de parada: se o valor absoluto da função em x2 é menor que a tolerância desejada
-        # erroy = abs(f(x2)) VERIFICAR COM O PROFESSOR
 
         erro = None
 
         if(errox < tolerancia):
             erro = errox
-        # elif (erroy < tolerancia):  VERIFICAR COM O PROFESSOR
-        #     erro = erroy  VERIFICAR COM O PROFESSOR
 
         if erro:
             tempo = time.time() - inicio
