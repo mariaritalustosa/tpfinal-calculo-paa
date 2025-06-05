@@ -3,6 +3,8 @@ import time
 def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
     inicio = time.time()
     iteracoes = 0
+    x2 = 0
+    erro = 0
 
     for i in range(max_iteracoes):
         f_x0 = f(x0)
@@ -10,7 +12,8 @@ def metodo_secante(f, x0, x1, tolerancia= 1e-4, max_iteracoes = 100):
 
         if abs(f_x1 - f_x0) == 0:
             print("Erro no metodo da secante: divisão por zero evitada")
-            return 0, 0, 0, 0
+            tempo = time.time() - inicio
+            return x2, iteracoes, tempo, erro
         
         #calcula o próximo ponto da iteração pelo método da secante
         x2  = (x0 * f_x1  - x1 * f_x0) / (f_x1 - f_x0)
@@ -113,14 +116,12 @@ def metodo_newton_raphson(f, df, x0, tol=1e-4, max_iter=100):
 
 
 def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
-    # [ALGUNS CODIGOS FORAM MOVIDOS, AI PRECISA ARRUMAR OS COMENTÁRIOS PARA O LUGAR CORRETO]
-    
     #inicia a contagem de tempo para medir a duração do método
     inicio = time.time()
     iteracoes = 0
 
     #verifica se f(a) e f(b) tem sinais opostos
-    if f(a) * f(b) >= 0:
+    if f(a) * f(b) > 0:
         print("Erro no método da bisseção: requer que a e b tenham sinais opostos")
         return 0, 0, 0, 0
     
@@ -130,15 +131,15 @@ def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
         fc = f(c)
 
         #atualiza o intervalo [a, b] dependendo do sinal do produto f(a)*f(c)
-        if f(a) * fc <= 0:
-            b = c
-        else:
+        if f(a) * fc > 0:
             a = c
+        else:
+            b = c
 
         #calcula o erro
         erro = abs(b - a)
 
-        if erro <= tolerancia:
+        if c <= tolerancia:
             tempo = time.time() - inicio
             #retorna a raiz aproximada, número de iterações, tempo gasto e erro
             return c, iteracoes + 1, tempo, erro

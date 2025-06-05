@@ -1,4 +1,7 @@
 def formatar_raiz(raiz):
+    if abs(raiz) == 0:
+        raiz = 0
+
     if raiz >= 0:
         return f" {raiz:.6f}"
     
