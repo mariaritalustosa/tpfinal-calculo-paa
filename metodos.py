@@ -139,7 +139,7 @@ def metodo_bissecao(f, a, b, tolerancia = 1e-4, max_iteracoes=100):
         #calcula o erro
         erro = abs(b - a)
 
-        if c <= tolerancia:
+        if erro <= tolerancia:
             tempo = time.time() - inicio
             #retorna a raiz aproximada, número de iterações, tempo gasto e erro
             return c, iteracoes + 1, tempo, erro
